@@ -5,17 +5,6 @@ using UnityEngine.SceneManagement ;
 public class botonesCellPlayer : MonoBehaviour
 {
 
-    const int ANIMATION_QUIETO = 0;
-    const int ANIMATION_CAMINAR = 1;
-    const int ANIMATION_CORRER = 2;
-    const int ANIMATION_ATACAR = 3;
-    const int ANIMATION_Saltar = 4;
-    const int ANIMATION_MUERTE = 5;
-    const int ANIMATION_DESLIZAR = 6;
-    const int ANIMATION_ESCALAR = 7;
-
-  Animator animator;
-
     public float JumpForce = 5;
     public float velocity = 0;
     public float defaultVelocity=14;
@@ -56,7 +45,6 @@ public class botonesCellPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         gameManager = FindObjectOfType<GameManagerController>();   
@@ -80,7 +68,6 @@ public class botonesCellPlayer : MonoBehaviour
 
     private void Walk()
     {
-        ChangeAnimation(ANIMATION_CAMINAR);
         rb.velocity = new Vector2(velocity,rb.velocity.y);
         if(velocity < 0)
             sr.flipX = true;
@@ -90,28 +77,17 @@ public class botonesCellPlayer : MonoBehaviour
     }
 
     public void MoverDerecha()
-<<<<<<< HEAD
     {
         ChangeAnimation(ANIMATION_CAMINAR);
         velocity = defaultVelocity;
-=======
-    { 
->>>>>>> 2aeacb0191ac5a6cf6e48938035e9471bd59810d
         
-        velocity = defaultVelocity;
-       
 
     }
 
     public void MoverIzquierda()
     {
-<<<<<<< HEAD
         ChangeAnimation(ANIMATION_CAMINAR);
           velocity = -defaultVelocity;
-=======
-       
-        velocity = -defaultVelocity;
->>>>>>> 2aeacb0191ac5a6cf6e48938035e9471bd59810d
         
            
     }
@@ -120,21 +96,16 @@ public class botonesCellPlayer : MonoBehaviour
     {
         ChangeAnimation(ANIMATION_QUIETO);  
         velocity=0;
-        ChangeAnimation(ANIMATION_QUIETO);  
     }
 
 
     public void Saltar()
     {
-<<<<<<< HEAD
         audioSource.PlayOneShot(jumpclip);
-=======
->>>>>>> 2aeacb0191ac5a6cf6e48938035e9471bd59810d
         ChangeAnimation(ANIMATION_Saltar);
         if(aux < 2)
         {
             rb.AddForce(new Vector2(0,JumpForce),ForceMode2D.Impulse);
-            
             aux++;
         }
         
@@ -175,17 +146,10 @@ public class botonesCellPlayer : MonoBehaviour
 
 
 
-
-
-       
-
-
-
     }
 
 
 
-<<<<<<< HEAD
 
 
 
@@ -314,25 +278,4 @@ public class botonesCellPlayer : MonoBehaviour
 
 
 
-=======
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        //puedeSaltar = false;
-        aux=0;
-    }
-
-
-     private void ChangeAnimation(int animation)
-            {
-                animator.SetInteger("Estado0", animation);
-            
-
-            }
-            private void cambioAnimation(bool anima)
-            {
-                animator.SetBool("puedeSaltar", anima);
-
-
-            }
->>>>>>> 2aeacb0191ac5a6cf6e48938035e9471bd59810d
 }
