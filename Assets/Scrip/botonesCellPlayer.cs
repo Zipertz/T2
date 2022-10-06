@@ -5,6 +5,16 @@ using UnityEngine.SceneManagement ;
 public class botonesCellPlayer : MonoBehaviour
 {
 
+    public const string Arma_Espada= "espada";
+    public const string Arma_Pistola= "pistola";
+
+    private string CurrentArma = Arma_Pistola;
+
+
+    private bool atacarConKatana = false;
+    private float tiempoConEspada = 0;
+
+
     public float JumpForce = 5;
     public float velocity = 0;
     public float defaultVelocity=14;
@@ -16,6 +26,16 @@ public class botonesCellPlayer : MonoBehaviour
     public GameObject bullet;
     private GameManagerController gameManager;
     private Vector3 lastCheckPointPosition;
+
+
+
+    private float  tiempoPresionado=0;
+    public GameObject bullet3;
+   private bool  atacarCargado= false;
+
+    private BanderaSinEnemigos baderas;
+
+
 
 
      Animator animator;
@@ -50,12 +70,40 @@ public class botonesCellPlayer : MonoBehaviour
         gameManager = FindObjectOfType<GameManagerController>();   
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        baderas = FindObjectOfType<BanderaSinEnemigos>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(atacarCargado)
+        {
+            tiempoPresionado += Time.deltaTime;
+        }
+
+        if(atacarCargado==false)
+        {
+            tiempoPresionado = 0;
+            
+        }
+
+
+        if(atacarConKatana)
+        {
+            tiempoConEspada += Time.deltaTime;
+        }
+
+        if(tiempoConEspada >= 1)
+        {   
+             
+            tiempoConEspada = 0;
+            atacarConKatana= false;
+            Debug.Log("reseteo de espada");
+            ChangeAnimation(ANIMATION_QUIETO); 
+        }
         Movimiento();
+        
     }
 
 
@@ -92,6 +140,25 @@ public class botonesCellPlayer : MonoBehaviour
            
     }
 
+
+     public void ContadorDisparoCargado()
+    {
+        Debug.Log(tiempoPresionado);
+        atacarCargado= true;
+           
+    }
+
+    public void DisparoCargado()
+    {
+        Debug.Log(tiempoPresionado);
+       
+             atacarCargado= false;
+            
+       
+       
+           
+    }
+
     public void Quieto()
     {
         ChangeAnimation(ANIMATION_QUIETO);  
@@ -112,9 +179,29 @@ public class botonesCellPlayer : MonoBehaviour
     }
 
 
-    public void atacar()
-    {
-        if(aux1 < 5){
+ 
+
+
+    public void CambioArma(){
+
+        if(CurrentArma == Arma_Pistola)
+        {
+            CurrentArma = Arma_Espada;
+        }
+        else if(CurrentArma == Arma_Espada)
+        {
+            CurrentArma = Arma_Pistola;
+        }
+
+    }
+
+
+
+    public void Attack(){
+
+        if(CurrentArma == Arma_Pistola  && tiempoPresionado <2)
+        {
+            if(aux1 < 10){
             var game = FindObjectOfType<GameManagerController>();
                 //Crear escudo
                 if(sr.flipX == false){
@@ -143,17 +230,59 @@ public class botonesCellPlayer : MonoBehaviour
                 }
          
         }
+        }
+        if(CurrentArma == Arma_Pistola && tiempoPresionado >=2)
+        {
+             RealseCarge3();
+        }
+        
+        if(CurrentArma == Arma_Espada)
+        {
+            ChangeAnimation(ANIMATION_ATACAR);  
+            
+            atacarConKatana = true;
 
-
+        }
 
     }
 
 
 
+  void RealseCarge3 ()
+     {
 
+                var game = FindObjectOfType<GameManagerController>();
+            //Crear escudo
+               if(sr.flipX == false){
+               
+                
+                var shieldPosition = transform.position + new Vector3(1,0,0);
+                var gb = Instantiate(bullet3,
+                                 shieldPosition,
+                                 Quaternion.identity) as GameObject;
+                var controller =gb.GetComponent<bala3>();
+                controller.SetRightDirection(); 
+                game.perderBala(10);
+                aux1++;
+                
+             }
+             if(sr.flipX==true){
+                
+                
+                var shieldPosition = transform.position + new Vector3(-1,0,0);
+                var gb = Instantiate(bullet3,
+                                 shieldPosition,
+                                 Quaternion.identity) as GameObject;
+                var controller =gb.GetComponent<bala3>();
+                controller.SetLeftDirection(); 
+                game.perderBala(10);
+                aux1++;
+               
+             }
+            tiempoPresionado=0;
+            
 
-
-
+     }
 
     
 
@@ -161,7 +290,20 @@ public class botonesCellPlayer : MonoBehaviour
         {
             //puedeSaltar = false;
             aux=0;
-            if ((other.gameObject.tag == "Enemy")&& aux2<3)
+
+            if(other.gameObject.tag == "Enemy" && atacarConKatana ) 
+            {
+                Destroy(other.gameObject);
+                gameManager.GanarPuntos(10);
+                baderas.EnemigosEliminado();
+                gameManager.PerderEnemigos(5);
+              
+                
+            }
+
+
+
+            if ((other.gameObject.tag == "Enemy")&& aux2<3 && atacarConKatana==false)
             {
             
                 animator.SetTrigger("Muerto");
