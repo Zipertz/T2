@@ -11,7 +11,7 @@ public class BanderaSinMonedas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cantidadMonedas = GameObject.FindGameObjectsWithTag("Coin").Length;
+        cantidadMonedas = GameObject.FindGameObjectsWithTag("moneda").Length;
     }
 
     public void MonedasEliminado()

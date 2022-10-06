@@ -11,6 +11,8 @@ public class GameData
    public int Coin3 {get;set;}
    public int Balas {get;set;}
    public int Lives {get;set;}
+
+   public int Enemy {get;set;}
 }
 
     

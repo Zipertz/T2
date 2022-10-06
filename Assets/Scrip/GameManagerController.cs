@@ -63,7 +63,7 @@ public class GameManagerController : MonoBehaviour
 
 
     public void SaveGame(){
-        var filePath = Application.persistentDataPath + "/semana8-2.dat";
+        var filePath = Application.persistentDataPath + "/t2-2.dat";
         FileStream file;
 
         if(File.Exists(filePath))
@@ -76,6 +76,8 @@ public class GameManagerController : MonoBehaviour
         data.Balas = balas;
         data.Lives = lives;
 
+        data.Enemy = enemigos;
+
         data.Coin1=coin1;
         data.Coin2=coin2;
         data.Coin3=coin3;
@@ -86,7 +88,7 @@ public class GameManagerController : MonoBehaviour
     }
 
     public void LoadGame(){
-            var filePath = Application.persistentDataPath + "/semana8-2.dat";
+            var filePath = Application.persistentDataPath + "/t2-2.dat";
         FileStream file;
 
         if(File.Exists(filePath)){
@@ -105,6 +107,8 @@ public class GameManagerController : MonoBehaviour
         coin2 = data.Coin2;
         coin3 = data.Coin3;
 
+
+         enemigos= data.Enemy;
         score = data.Score;
         balas = data.Balas;
         lives = data.Lives;

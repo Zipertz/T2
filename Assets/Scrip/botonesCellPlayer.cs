@@ -201,7 +201,7 @@ public class botonesCellPlayer : MonoBehaviour
 
         if(CurrentArma == Arma_Pistola  && tiempoPresionado <2)
         {
-            if(aux1 < 10){
+            if(aux1 < 50){
             var game = FindObjectOfType<GameManagerController>();
                 //Crear escudo
                 if(sr.flipX == false){
@@ -213,7 +213,7 @@ public class botonesCellPlayer : MonoBehaviour
                                     Quaternion.identity) as GameObject;
                     var controller =gb.GetComponent<bala>();
                     controller.SetRightDirection(); 
-                    game.perderBala(5);
+                    game.perderBala(50);
                     aux1++;
                 }
                 if(sr.flipX==true){
@@ -225,7 +225,7 @@ public class botonesCellPlayer : MonoBehaviour
                                     Quaternion.identity) as GameObject;
                     var controller =gb.GetComponent<bala>();
                     controller.SetLeftDirection(); 
-                    game.perderBala(5);
+                    game.perderBala(50);
                     aux1++;
                 }
          
@@ -262,7 +262,7 @@ public class botonesCellPlayer : MonoBehaviour
                                  Quaternion.identity) as GameObject;
                 var controller =gb.GetComponent<bala3>();
                 controller.SetRightDirection(); 
-                game.perderBala(10);
+                game.perderBala(50);
                 aux1++;
                 
              }
@@ -275,7 +275,7 @@ public class botonesCellPlayer : MonoBehaviour
                                  Quaternion.identity) as GameObject;
                 var controller =gb.GetComponent<bala3>();
                 controller.SetLeftDirection(); 
-                game.perderBala(10);
+                game.perderBala(50);
                 aux1++;
                
              }
@@ -361,6 +361,7 @@ public class botonesCellPlayer : MonoBehaviour
                 Destroy(other.gameObject);
                 gameManager.GanarCoin1(1);
                 gameManager.GanarPuntos(10);
+                baderas.MonedasEliminado();
                 
 
             }

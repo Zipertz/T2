@@ -50,7 +50,7 @@ public class enemy : MonoBehaviour
          if (other.gameObject.tag == "Bala")
         {
             cont1++;
-            if (cont1 == 2)
+            if (cont1 >= 1)
             {
                 Destroy(this.gameObject);
                 gameManager.PerderEnemigos(5);
