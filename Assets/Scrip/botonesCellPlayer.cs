@@ -347,7 +347,7 @@ public class botonesCellPlayer : MonoBehaviour
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Onco");
+            
             if(other.gameObject.name == "Flecha_Cpoint"){
             lastCheckPointPosition = transform.position;
             }
